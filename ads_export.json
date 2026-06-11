@@ -1,0 +1,177 @@
+[
+    {
+        "id": 1,
+        "title": "Nike Running Shoes Sale",
+        "description": "Get the latest Nike Air Zoom running shoes at 40% off!",
+        "url": "https://www.flipkart.com/search?q=nike+running+shoes",
+        "keywords": [
+            "nike",
+            "shoes",
+            "running",
+            "sneakers",
+            "footwear",
+            "fashion"
+        ],
+        "category": "fashion"
+    },
+    {
+        "id": 2,
+        "title": "Adidas Sports Shoes",
+        "description": "Shop Adidas Ultraboost and Superstar shoes at best prices!",
+        "url": "https://www.amazon.in/s?k=adidas+shoes",
+        "keywords": [
+            "adidas",
+            "shoes",
+            "sports",
+            "sneakers",
+            "footwear",
+            "fashion"
+        ],
+        "category": "fashion"
+    },
+    {
+        "id": 3,
+        "title": "Book Cheap Flights",
+        "description": "Find the best deals on flights to Delhi, Mumbai and more!",
+        "url": "https://www.makemytrip.com/flights",
+        "keywords": [
+            "flight",
+            "travel",
+            "trip",
+            "vacation",
+            "delhi",
+            "mumbai"
+        ],
+        "category": "travel"
+    },
+    {
+        "id": 4,
+        "title": "Hotel Deals in India",
+        "description": "Book top rated hotels at amazing discounts!",
+        "url": "https://www.oyo.com",
+        "keywords": [
+            "hotel",
+            "travel",
+            "stay",
+            "room",
+            "accommodation"
+        ],
+        "category": "travel"
+    },
+    {
+        "id": 5,
+        "title": "Order Food Online",
+        "description": "Get your favorite food delivered in 30 minutes!",
+        "url": "https://www.swiggy.com",
+        "keywords": [
+            "food",
+            "delivery",
+            "restaurant",
+            "eat",
+            "order",
+            "pizza",
+            "biryani"
+        ],
+        "category": "food"
+    },
+    {
+        "id": 6,
+        "title": "Samsung Galaxy S24",
+        "description": "Latest Samsung flagship phone with AI features!",
+        "url": "https://www.flipkart.com/search?q=samsung+galaxy+s24",
+        "keywords": [
+            "samsung",
+            "phone",
+            "smartphone",
+            "android",
+            "technology",
+            "mobile"
+        ],
+        "category": "technology"
+    },
+    {
+        "id": 7,
+        "title": "iPhone 15 Best Price",
+        "description": "Buy Apple iPhone 15 at the lowest price with EMI options!",
+        "url": "https://www.amazon.in/s?k=iphone+15",
+        "keywords": [
+            "iphone",
+            "apple",
+            "phone",
+            "smartphone",
+            "ios",
+            "technology"
+        ],
+        "category": "technology"
+    },
+    {
+        "id": 8,
+        "title": "Online Health Consultation",
+        "description": "Consult top doctors from home instantly!",
+        "url": "https://www.practo.com",
+        "keywords": [
+            "health",
+            "doctor",
+            "medical",
+            "consultation",
+            "fitness"
+        ],
+        "category": "health"
+    },
+    {
+        "id": 9,
+        "title": "Learn Python Programming",
+        "description": "Master Python with expert-led courses and get certified!",
+        "url": "https://www.udemy.com/courses/search/?q=python",
+        "keywords": [
+            "python",
+            "programming",
+            "coding",
+            "course",
+            "education",
+            "learn"
+        ],
+        "category": "education"
+    },
+    {
+        "id": 10,
+        "title": "Stock Market Investing",
+        "description": "Start investing in stocks with zero commission!",
+        "url": "https://zerodha.com",
+        "keywords": [
+            "stock",
+            "invest",
+            "finance",
+            "money",
+            "trading",
+            "market"
+        ],
+        "category": "finance"
+    },
+    {
+        "id": 11,
+        "title": "Latest Smartphones",
+        "description": "Shop the newest phones at the best prices!",
+        "url": "https://www.amazon.in",
+        "keywords": [
+            "technology",
+            "phone",
+            "gadget",
+            "tech"
+        ],
+        "category": "technology"
+    },
+    {
+        "id": 12,
+        "title": "Learn Programming Online",
+        "description": "Master coding with expert-led courses!",
+        "url": "https://www.udemy.com",
+        "keywords": [
+            "education",
+            "coding",
+            "course",
+            "learn"
+        ],
+        "category": "education"
+    }
+]
