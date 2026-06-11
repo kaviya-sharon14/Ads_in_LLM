@@ -2,6 +2,11 @@
 
 AdGeno is an intelligent, context-aware chatbot platform that seamlessly integrates stealth advertising into natural, empathetic conversations. Built with a modern tech stack, it provides a seamless user experience while dynamically fetching real-time recommendations based on the user's implicit intent.
 
+## 📸 Screenshots
+![Screenshot 1](screenshot1.png)
+![Screenshot 2](screenshot2.png)
+![Screenshot 3](screenchot3.png)
+
 ## 🌟 Key Features
 - **Empathetic AI Conversationalist**: Acts as a supportive friend, offering concise and engaging responses.
 - **Stealth Ad Injection**: Natively weaves product recommendations into the conversation without feeling intrusive or "salesy".
