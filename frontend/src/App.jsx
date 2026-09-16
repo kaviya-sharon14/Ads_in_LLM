@@ -5,7 +5,9 @@ import * as pdfjsLib from 'pdfjs-dist';
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 // --- Configuration & Helpers ---
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+const API_BASE_URL = import.meta.env.VITE_API_URL !== undefined 
+  ? import.meta.env.VITE_API_URL 
+  : (import.meta.env.DEV ? "http://127.0.0.1:8000" : "");
 const generateId = () => Math.random().toString(36).substr(2, 9);
 const SESSION_ID = "user_" + generateId();
 
@@ -125,6 +127,7 @@ function App() {
 
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
+  const [previousIntent, setPreviousIntent] = useState(null);
 
   // File upload state
   const [attachedFiles, setAttachedFiles] = useState([]);
@@ -291,14 +294,22 @@ function App() {
     setLoading(true);
 
     try {
+      const historyPayload = messages.map(m => ({
+        role: m.role,
+        content: m.content
+      }));
+
       const payload = {
         session_id: SESSION_ID,
         message: input.trim() || "[Sent a file/image]",
+        history: historyPayload,
+        previous_intent: previousIntent,
         images: images,
         file_context: documents.map(f => f.content).join("\n\n")
       };
 
-      const response = await fetch(`${API_BASE_URL}/chat`, {
+      const endpoint = API_BASE_URL ? `${API_BASE_URL}/chat` : "/chat";
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -309,11 +320,17 @@ function App() {
       const data = await response.json();
       const aiResponse = data.response;
 
+      if (data.intent) {
+        setPreviousIntent(data.intent);
+      }
+
       updateCurrentChatMessages(prev => [
         ...prev,
         {
           role: "assistant",
           content: aiResponse,
+          ad: data.ad || null,
+          intent: data.intent || null,
           isStreamed: false
         }
       ]);

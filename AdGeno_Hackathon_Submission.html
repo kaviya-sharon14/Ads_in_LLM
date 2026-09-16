@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdGeno - Hackathon Submission & Project Report</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN (Optional for base, but we will write custom elegant css for the premium vibe) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Markdown parser (marked.js) and Mermaid.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['Outfit', 'sans-serif'],
+            mono: ['"Fira Code"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --card-bg: rgba(18, 18, 24, 0.7);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-primary: #f4f4f5;
+      --text-secondary: #a1a1aa;
+      --accent: #6366f1;
+      --accent-gradient: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+      --emerald-glow: linear-gradient(135deg, #34d399 0%, #059669 100%);
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(52, 211, 153, 0.04) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 30%, #a1a1aa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .accent-gradient-text {
+      background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 50%, #4f46e5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Markdown Styling */
+    #markdown-content h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #ffffff 40%, #e4e4e7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 0.5rem;
+    }
+
+    #markdown-content h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-family: 'Outfit', sans-serif;
+      color: #e4e4e7;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    #markdown-content h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #f4f4f5;
+    }
+
+    #markdown-content p {
+      margin-bottom: 1.25rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+    }
+
+    #markdown-content ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 1.5rem;
+    }
+
+    #markdown-content ul li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    #markdown-content ul li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: #818cf8;
+      font-weight: bold;
+    }
+
+    #markdown-content code {
+      font-family: 'Fira Code', monospace;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      color: #f472b6;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    #markdown-content pre {
+      background-color: #0c0c0e;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+    }
+
+    #markdown-content pre code {
+      background-color: transparent;
+      padding: 0;
+      border-radius: 0;
+      border: none;
+      color: #e4e4e7;
+    }
+
+    #markdown-content blockquote {
+      border-left: 4px solid var(--accent);
+      background-color: rgba(99, 102, 241, 0.05);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0 12px 12px 0;
+    }
+
+    #markdown-content blockquote p {
+      margin-bottom: 0;
+      font-style: italic;
+      color: #d4d4d8;
+    }
+
+    #markdown-content table {
+      width: 100%;
+      margin-bottom: 1.5rem;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    #markdown-content th {
+      background-color: rgba(255, 255, 255, 0.03);
+      color: #f4f4f5;
+      font-weight: 600;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    #markdown-content td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-secondary);
+    }
+
+    #markdown-content hr {
+      border: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin: 2rem 0;
+    }
+
+    #markdown-content a {
+      color: #818cf8;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(129, 140, 248, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    #markdown-content a:hover {
+      color: #a5b4fc;
+      border-bottom-style: solid;
+    }
+
+    .btn-action {
+      background: var(--accent-gradient);
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+    }
+
+    /* Print utility styles */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #18181b !important;
+        background-image: none !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .glass-card {
+        background: #ffffff !important;
+        border: none !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+      }
+      #markdown-content h1 {
+        color: #18181b !important;
+        border-bottom: 2px solid #e4e4e7 !important;
+      }
+      #markdown-content h2, #markdown-content h3 {
+        color: #27272a !important;
+      }
+      #markdown-content p, #markdown-content ul li {
+        color: #3f3f46 !important;
+      }
+      #markdown-content code {
+        background-color: #f4f4f5 !important;
+        color: #09090b !important;
+        border: 1px solid #e4e4e7 !important;
+      }
+      #markdown-content pre {
+        background-color: #f4f4f5 !important;
+        border: 1px solid #e4e4e7 !important;
+      }
+      #markdown-content pre code {
+        color: #18181b !important;
+      }
+      #markdown-content blockquote {
+        background-color: #fafafa !important;
+        border-left: 4px solid #18181b !important;
+      }
+      #markdown-content blockquote p {
+        color: #52525b !important;
+      }
+      #markdown-content td, #markdown-content th {
+        border-bottom: 1px solid #e4e4e7 !important;
+        color: #27272a !important;
+      }
+    }
+  </style>
+</head>
+<body class="py-10 px-4 md:px-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header Actions (No print) -->
+    <div class="flex justify-between items-center mb-8 no-print glass-card p-5">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-400 flex items-center justify-center font-bold text-white font-outfit text-xl shadow-lg">AG</div>
+        <div>
+          <h2 class="font-outfit font-bold text-lg leading-tight">AdGeno Document Exporter</h2>
+          <p class="text-xs text-zinc-400">Perfect format to print to PDF for hackathon submissions</p>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <button onclick="window.print()" class="btn-action text-white font-medium px-5 py-2.5 rounded-xl flex items-center gap-2 cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zM8 13H6v2h2v-2z" clip-rule="evenodd" />
+          </svg>
+          Print / Save as PDF
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="glass-card p-6 md:p-12 shadow-2xl">
+      <!-- Custom visual elements for the header -->
+      <div class="text-center mb-10 pb-8 border-b border-zinc-800/60">
+        <span class="px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Hackathon Project Submission</span>
+        <h1 class="font-outfit font-extrabold text-4xl md:text-5xl mt-4 mb-2 text-white tracking-tight">ADGENO</h1>
+        <p class="text-indigo-400 font-medium text-lg md:text-xl font-outfit max-w-2xl mx-auto">
+          Context-Aware Stealth Advertising & Empathetic Conversational Monetization Platform
+        </p>
+      </div>
+
+      <!-- Raw Markdown Content Section -->
+      <article id="markdown-content" class="prose prose-invert max-w-none">
+        <!-- Will be populated by JS -->
+        <div class="text-center text-zinc-500 py-20">Parsing document structure...</div>
+      </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-8 text-center text-xs text-zinc-500 no-print">
+      <p>Created by AdGeno Developer Companion. Under MIT License. © 2026. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- Raw Markdown Data (Embedded securely) -->
+  <script type="text/markdown" id="markdown-raw">
+## 📌 Executive Summary
+**AdGeno** is a next-generation conversational AI platform that solves the biggest bottleneck in consumer-facing LLMs: **monetization without compromising user experience**. 
+
+Traditional banner ads, pop-ups, and forced recommendations ruin the cleanliness of chat interfaces and erode user trust. AdGeno introduces a **Stealth Product Placement Engine** that naturally weaves relevant sponsored products or real-time web recommendations into friendly, empathetic, and highly engaging conversations. 
+
+By analyzing the user’s implicit intent in real-time, the system retrieves relevant items from a local sponsored database or falls back to live web searches, presenting them organically. Crucially, the platform operates on a **Trust-First model**, withholding promotional URLs until the user explicitly requests them.
+
+---
+
+## 🔴 The Problem Statement
+As Large Language Models (LLMs) become the primary interface for search, companionship, and productivity, platforms face an existential monetization crisis:
+1. **Subscription fatigue:** Only a small percentage of users pay for premium chatbot tiers, limiting mass market monetization.
+2. **Intrusive ads destroy UX:** Overlaying banner ads, video rolls, or popup advertisements onto chat streams disrupts the conversation and feels unnatural.
+3. **The "Sales Pitch" backlash:** When AI bots aggressively push products or spam affiliate links at the start of a conversation, users immediately feel manipulated and abandon the platform.
+4. **Outdated training data:** LLMs cannot recommend real-time products or deals because their parametric knowledge is frozen at the time of training.
+
+---
+
+## 🟢 The Solution: AdGeno
+AdGeno introduces **Conversational Native Advertising**—an AI chatbot that behaves like a supportive, observant human friend while serving as an effective, high-conversion ad network.
+
+### How AdGeno Solves the Problem:
+* **Empathetic Stealth Placement:** Instead of hard-selling, AdGeno behaves as a caring companion. It limits responses to 2-3 sentences, listens actively, and suggests brands or solutions naturally *only* in subsequent dialogue turns.
+* **On-Demand Link Exposure:** The AI recommends the product textually first (e.g., *"If you're feeling stressed, maybe planning a short getaway would help. I've heard MakeMyTrip has great deals on flights this week. How are you feeling overall?"*). The actual link is provided **only** if the user asks for it (e.g., *"Do you have a link?"*). This maintains high user trust and leads to qualified, high-intent clicks.
+* **Dual-Engine Ads Retrieval:** If a user talks about a topic covered by our sponsored partners (e.g., Swiggy, MakeMyTrip, Practo), AdGeno retrieves their campaigns from a local SQL database. For open-domain queries, it uses live web searches to find up-to-date recommendations.
+* **Modern Multi-Modal Capability:** Users can type, upload files (PDFs, text files), or attach images. The system parses this context to understand their lifestyle, needs, and buying signals.
+
+---
+
+## ⚙️ System Architecture & Workflow
+
+AdGeno is built with a highly decoupled, modern tech stack designed for high throughput, low latency, and fluid user interactions.
+
+### 1. Frontend: The Fluid Experience (React + Vite)
+* **Glassmorphic UI:** Designed with CSS glassmorphism (frosted glass, glowing backdrops, and vibrant color spots) to offer a clean, premium, and futuristic aesthetic.
+* **In-Browser Document Processing:** Uses `pdfjs-dist` to parse PDFs and plain-text files directly on the client side. The extracted text is prepended to the chat prompt, reducing backend compute requirements.
+* **Multi-Modal Support:** Base64-encodes user-uploaded images and sends them directly to the backend for visual context processing.
+* **Typewriter Response Streamer:** Simulates realistic human typing speeds to make the chat feel conversational, intimate, and organic.
+* **Conversational CRUD:** Chat history is stored in the browser's `localStorage` allowing users to manage, rename, and delete sessions.
+
+### 2. Backend: The Intelligent Router (FastAPI + Python)
+* **High-Performance Routing:** Utilizes FastAPI for async request handling.
+* **Intent Detection (Zero-Shot Classifier):** Before replying, the backend routes the user's input to Groq's LLaMA-3.3-70B model to classify their immediate topic into 10 categories: `travel`, `food`, `technology`, `fashion`, `health`, `sports`, `education`, `finance`, `entertainment`, or `general`.
+* **Ad Selection Logic:** 
+  * If the intent matches a sponsored category in the database, SQLAlchemy fetches the most relevant ad campaign.
+  * If no local campaign matches, the server initiates a live web search using `duckduckgo_search` to find real-time, high-quality, relevant product links.
+* **Ad Context Injection:** The selected recommendation is added to the system prompt dynamically as a "sponsored context instruction," guiding the LLM on how to weave the brand into its response.
+* **Dual Model Orchestration:**
+  * **Text Only:** Runs LLaMA-3.3-70B-Versatile on Groq for ultra-fast, conversational generation.
+  * **Multi-Modal (Images):** Automatically switches to LLaMA-3.2-90B-Vision-Preview to analyze images alongside the text.
+
+---
+
+## 🛠️ The Tech Stack
+
+| Layer | Technologies Used | Description |
+|---|---|---|
+| **Frontend** | React.js, Vite, Vanilla CSS, HTML5 | Light-weight, ultra-fast rendering with premium glassmorphism styling |
+| **Document Processing**| PDF.js (pdfjs-dist) | Client-side PDF parsing and text extraction |
+| **Backend** | FastAPI, Python 3, Uvicorn | High-performance asynchronous API framework |
+| **Database** | SQLite, SQLAlchemy ORM | Relational database to index, query, and store user sessions and ad campaigns |
+| **AI/LLM Engine** | Groq API, LLaMA-3.3-70B, LLaMA-3.2-90B-Vision | State-of-the-art text and multi-modal models serving responses in milliseconds |
+| **Live Web Search** | DuckDuckGo Search API wrapper | Fetches live product links and information for open-domain intent fallbacks |
+| **Environment & Config**| dotenv | Safe loading of API tokens and server ports |
+
+---
+
+## 💡 Stealth Advertising Logic: Step-by-Step Scenario
+
+Here is how the conversational flow behaves behind the scenes:
+
+### Phase 1: Intent Extraction
+* **User Input:** *"I'm planning a weekend getaway. Feeling super exhausted from work."*
+* **Intent Classifier:** Classifies intent as `travel`.
+
+### Phase 2: Match & Retrieve
+* **Ad Engine:** Queries SQLite database for category `travel`. Matches sponsored campaign: **MakeMyTrip** (Title: *Book Cheap Flights*, URL: *https://www.makemytrip.com*).
+* **System Prompt Update:** Inject instruction: `Sponsored recommendation to include naturally: [SPONSORED] Book Cheap Flights: Find the best deals on flights worldwide! Learn more at: https://www.makemytrip.com`.
+
+### Phase 3: Dialogue Turn 1 (Stealth Placement)
+* **System Constraints:** Limit to 2-3 sentences. Do not mention URLs. Build rapport.
+* **AI Chatbot Response:** *"I'm sorry you're feeling so exhausted; work can really drain your energy. Taking a weekend getaway sounds like a wonderful idea to recharge. Have you looked at MakeMyTrip recently? They have some really good deals on flights right now. Where would your dream weekend escape be?"*
+* *(Notice: The AI is friendly, suggests the sponsor textually, asks a follow-up question, and hides the link).*
+
+### Phase 4: Dialogue Turn 2 (On-Demand Activation)
+* **User Input:** *"Oh nice! Do you have a link for that?"*
+* **System Constraints:** User explicitly requested a link. URL disclosure allowed.
+* **AI Chatbot Response:** *"Yes, definitely! You can search and book your flight directly on [MakeMyTrip](https://www.makemytrip.com). Let me know if you want help finding destination ideas!"*
+* *(Notice: The user receives the link only when they are highly motivated to click).*
+
+---
+
+## 📈 Business Model & Monetization Potential
+
+AdGeno introduces a sustainable business model for generative AI startups:
+
+1. **Empathetic Native CPC (Cost Per Click):** Advertisers bid to show up in chat contexts. Unlike traditional ads, clicks are high-intent because users must explicitly request the link.
+2. **Context-Aware Dynamic Sponsorship:** Brands purchase categories (e.g., a wellness brand sponsoring the `health` category). Every health-related conversational query dynamically references their product.
+3. **Real-time Local Merchant Lead Generation:** For local businesses (e.g., restaurants, clinics), the chatbot can search live, nearby places and deliver high-conversion suggestions.
+4. **Conversational Sentiment & Analytics:** Offers advertisers analytics on how users talk about their products (e.g., *"54% of users who were recommended Swiggy went on to ask for a link"*).
+
+---
+
+## 🚀 Future Scope & Scaling Roadmap
+* **Hyper-Localized SEO Recommendations:** Integrate GPS coordination to recommend local physical stores, cafes, and services.
+* **Personalized Conversational Retargeting:** Remember user preferences across chats (e.g., if a user mentioned being vegan in Chat 1, suggest vegan brands in Chat 3).
+* **Voice-Based Stealth Placements:** Integrate Text-to-Speech (TTS) and Speech-to-Text (STT) for auditory voice channels (e.g., smart home speakers) where stealth recommendations sound like natural voice advice.
+* **Unified Ad Bid Manager:** A self-serve dashboard for advertisers to upload ad copy, set keyword thresholds, bid prices, and monitor campaign click-through rates (CTR).
+
+---
+
+## 💻 Installation & Setup Guide
+
+### 📦 Prerequisites
+* Node.js (v18+)
+* Python 3.10+
+* Groq API Key (Free tier available)
+
+### 1. Setting up the Backend
+1. Open a terminal and navigate to the backend folder:
+   ```bash
+   cd backend
+   ```
+2. Create a Python virtual environment:
+   ```bash
+   python -m venv venv
+   # Activate on Windows:
+   .\venv\Scripts\activate
+   # Activate on Mac/Linux:
+   source venv/bin/activate
+   ```
+3. Install required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Create a `.env` file in the `backend` folder and insert your Groq API Key:
+   ```env
+   GROQ_API_KEY=your_groq_api_key_here
+   ```
+5. Seed the SQLite database with initial sponsored campaigns:
+   * Run the server:
+     ```bash
+     python -m uvicorn app.main:app --reload
+     ```
+   * Open a browser or run a curl command to trigger the seed endpoint:
+     `POST http://127.0.0.1:8000/ads/seed` (Returns: `{"message": "Sample ads seeded successfully!"}`)
+
+### 2. Setting up the Frontend
+1. Open a new terminal and navigate to the frontend folder:
+   ```bash
+   cd frontend
+   ```
+2. Install npm dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Vite React development server:
+   ```bash
+   npm run dev
+   ```
+4. Open the displayed URL (typically `http://localhost:5173`) in your browser to interact with the platform.
+  </script>
+
+  <script>
+    // Initialize Markdown and render it
+    document.addEventListener("DOMContentLoaded", () => {
+      const rawMarkdown = document.getElementById("markdown-raw").innerHTML;
+      const parsedHTML = marked.parse(rawMarkdown);
+      document.getElementById("markdown-content").innerHTML = parsedHTML;
+
+      // Initialize Mermaid
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'dark',
+        securityLevel: 'loose',
+        themeVariables: {
+          background: '#0c0c0e',
+          primaryColor: '#6366f1',
+          primaryTextColor: '#f4f4f5',
+          lineColor: '#3f3f46',
+        }
+      });
+    });
+  </script>
+</body>
+</html>
