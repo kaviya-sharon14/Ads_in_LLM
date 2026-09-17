@@ -146,7 +146,7 @@ CRITICAL CONVERSATIONAL & PATENT RULES:
         model_name = "llama-3.2-90b-vision-preview"
     else:
         messages_payload.append({"role": "user", "content": full_message})
-        model_name = "llama-3.3-70b-versatile"
+        model_name = "llama3-70b-8192"
 
     try:
         response = client.chat.completions.create(
