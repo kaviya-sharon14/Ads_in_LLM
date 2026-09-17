@@ -115,19 +115,23 @@ User message: "{message}"
 Return format: CATEGORY (e.g. skincare)
 Return ONLY the category name in lowercase.
 """
-    try:
-        response = client.chat.completions.create(
-            model="llama-3.1-70b-versatile",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=15,
-            temperature=0.1
-        )
-        llm_cat = response.choices[0].message.content.strip().lower()
-        for cat in CATEGORIES:
-            if cat in llm_cat:
-                return {"category": cat, "score": 0.9}
-    except Exception as e:
-        print(f"[IDP Stage 2 Warning] Groq LLM intent classification failed: {e}")
+    MODELS = ["openai/gpt-oss-120b", "qwen/qwen3.8-27b", "openai/gpt-oss-20b", "groq/compound-mini"]
+    for model_name in MODELS:
+        try:
+            response = client.chat.completions.create(
+                model=model_name,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=15,
+                temperature=0.1
+            )
+            llm_cat = response.choices[0].message.content.strip().lower()
+            for cat in CATEGORIES:
+                if cat in llm_cat:
+                    return {"category": cat, "score": 0.9}
+            break  # Model responded but no category matched
+        except Exception as e:
+            print(f"[IDP Stage 2 Warning] Model {model_name} failed: {e}")
+            continue
 
     return {"category": "general", "score": 0.3}
 

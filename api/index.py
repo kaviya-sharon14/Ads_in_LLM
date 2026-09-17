@@ -139,26 +139,31 @@ CRITICAL CONVERSATIONAL & PATENT RULES:
             messages_payload.append({"role": r, "content": content})
 
     if images:
-        content_list = [{"type": "text", "text": message}]
-        for img_url in images:
-            content_list.append({"type": "image_url", "image_url": {"url": img_url}})
-        messages_payload.append({"role": "user", "content": content_list})
-        model_name = "llama-3.2-90b-vision-preview"
+        # Vision not available on current plan, extract text description instead
+        messages_payload.append({"role": "user", "content": full_message + "\n[User also attached an image]"})
     else:
         messages_payload.append({"role": "user", "content": full_message})
-        model_name = "llama-3.1-70b-versatile"
 
-    try:
-        response = client.chat.completions.create(
-            model=model_name,
-            messages=messages_payload,
-            max_tokens=1024,
-            temperature=0.7
-        )
-        response_text = response.choices[0].message.content
-    except Exception as e:
-        print(f"[Groq LLM Error] {e}")
-        response_text = f"API Error: {str(e)}. Please share this error message."
+    # Try multiple models in order of preference (fallback chain)
+    MODELS = ["openai/gpt-oss-120b", "qwen/qwen3.8-27b", "openai/gpt-oss-20b", "groq/compound-mini"]
+    response_text = None
+
+    for model_name in MODELS:
+        try:
+            response = client.chat.completions.create(
+                model=model_name,
+                messages=messages_payload,
+                max_tokens=1024,
+                temperature=0.7
+            )
+            response_text = response.choices[0].message.content
+            break  # Success, stop trying
+        except Exception as e:
+            print(f"[Groq LLM Error with {model_name}] {e}")
+            continue  # Try next model
+
+    if not response_text:
+        response_text = f"All models are temporarily busy. Please try again in a moment."
 
     # Format return ad object for frontend display
     ad_data = None
