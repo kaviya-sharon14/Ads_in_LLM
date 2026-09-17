@@ -145,7 +145,8 @@ CRITICAL CONVERSATIONAL & PATENT RULES:
         messages_payload.append({"role": "user", "content": full_message})
 
     # Try multiple models in order of preference (fallback chain)
-    MODELS = ["openai/gpt-oss-120b", "qwen/qwen3.8-27b", "openai/gpt-oss-20b", "groq/compound-mini"]
+    # Verified working: qwen/qwen3.8-27b, groq/compound-mini
+    MODELS = ["qwen/qwen3.8-27b", "groq/compound-mini", "openai/gpt-oss-120b", "openai/gpt-oss-20b"]
     response_text = None
 
     for model_name in MODELS:
@@ -156,14 +157,16 @@ CRITICAL CONVERSATIONAL & PATENT RULES:
                 max_tokens=1024,
                 temperature=0.7
             )
-            response_text = response.choices[0].message.content
-            break  # Success, stop trying
+            text = response.choices[0].message.content
+            if text and text.strip():  # Only accept non-empty responses
+                response_text = text
+                break
         except Exception as e:
             print(f"[Groq LLM Error with {model_name}] {e}")
             continue  # Try next model
 
     if not response_text:
-        response_text = f"All models are temporarily busy. Please try again in a moment."
+        response_text = "All models are temporarily busy. Please try again in a moment."
 
     # Format return ad object for frontend display
     ad_data = None

@@ -115,7 +115,7 @@ User message: "{message}"
 Return format: CATEGORY (e.g. skincare)
 Return ONLY the category name in lowercase.
 """
-    MODELS = ["openai/gpt-oss-120b", "qwen/qwen3.8-27b", "openai/gpt-oss-20b", "groq/compound-mini"]
+    MODELS = ["qwen/qwen3.8-27b", "groq/compound-mini", "openai/gpt-oss-120b", "openai/gpt-oss-20b"]
     for model_name in MODELS:
         try:
             response = client.chat.completions.create(
