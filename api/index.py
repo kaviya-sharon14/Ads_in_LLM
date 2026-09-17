@@ -158,7 +158,7 @@ CRITICAL CONVERSATIONAL & PATENT RULES:
         response_text = response.choices[0].message.content
     except Exception as e:
         print(f"[Groq LLM Error] {e}")
-        response_text = "I'm right here with you! Could you repeat that? I want to make sure I give you the best answer."
+        response_text = f"API Error: {str(e)}. Please share this error message."
 
     # Format return ad object for frontend display
     ad_data = None
