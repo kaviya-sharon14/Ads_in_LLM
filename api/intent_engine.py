@@ -117,7 +117,7 @@ Return ONLY the category name in lowercase.
 """
     try:
         response = client.chat.completions.create(
-            model="llama3-70b-8192",
+            model="llama-3.1-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=15,
             temperature=0.1
